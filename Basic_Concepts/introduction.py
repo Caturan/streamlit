@@ -128,3 +128,76 @@ map_data = pd.DataFrame(
     columns=['lat', 'lon']
 )
 st.map(map_data)
+
+
+"""
+
+# Widgets
+When we have got the data or model into the state that we want to  explore, 
+we can add in widgets like st.slider(), st.button() or st.selectbox(). 
+It, really straightforward-treat widgets as variables:
+
+"""
+x = st.slider('x')
+st.write(x, 'squared is', x * x)
+
+"""
+
+Widgets can also be accessed by key, if we choose to specify a string to use as the unique key for the widget:
+
+"""
+st.text_input("Your name", key="name")
+
+# We can access the value at any point with:
+st.session_state.name
+
+"""
+Every widget with a key is automatically added to Session State.
+"""
+
+"""
+# Use checkboxes to show/hide data 
+
+One use case for checkboxes is to hide or show a specific chart or section in an app. 
+st.checkbox() takes a single argument, which is the widget label. 
+In this sample, the checkbox is used to toggle a conditional statement. 
+
+"""
+if st.checkbox('Show dataframe'):
+    chart_data = pd.DataFrame(
+        np.random.randn(20, 3),
+        columns=['a', 'b', 'c']
+        )
+
+    chart_data
+
+
+"""
+# Use a selectbox for options 
+
+Use st.selectbox to choose from a series. We can write in the options we want, 
+or pass through an array or data frame column. 
+
+Let's use the df data frame we created earlier. 
+"""
+df = pd.DataFrame({
+    'first column': [7, 19, 22, 10],
+    'second column': [10, 20, 30, 40]
+})
+
+option = st.selectbox(
+    'Which number do you like best',
+    df['first column']
+)
+'You selected: ', option
+
+"""
+Another sample for the selectbox()
+"""
+option = st.selectbox(
+    "How would you like to be contacted?",
+    ("Email", "Home phone", "Mobile phone"),
+    index=None,
+    placeholder="Select contact method..."
+)
+st.write("You selected: ", option)
