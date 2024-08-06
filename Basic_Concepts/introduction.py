@@ -201,3 +201,78 @@ option = st.selectbox(
     placeholder="Select contact method..."
 )
 st.write("You selected: ", option)
+
+
+"""
+# Layout 
+
+Streamlit makes it easy to organize our widgets in a left panel sidebar with st.sidebar. 
+Each elemet that's passed to st.sidebar is pinned to the left, allowing users to focus on the content in our app while still having access to UI controls. 
+
+For example, if we want to add a selectbox and a slider to a sidebar, use st.sidebar.slider and st.sidebar.selectbox instead of st.slider and st.selectbox:
+
+"""
+add_selectbox = st.sidebar.selectbox(
+    'How would you like to be contacted?',
+    ('Email', 'Home phone', 'Mobile phone')
+)
+
+# Add a slider to the sidebar:
+add_slider = st.sidebar.slider(
+    'Select a range of values',
+    0.0, 100.0, (25.0, 75.0)
+)
+
+
+"""
+Beyond the sidebar, Streamlit offers several other ways to control the layout of our app. 
+st.columns lets we place widgets side-by-side, and st.expander lets we conserve space by hiding away large content. 
+"""
+left_column, right_column = st.columns(2)
+# We can use a column just like st.sidebar:
+left_column.button('Press me!')
+
+# Or even better, call streamlit functions inside a "with" blocks:
+with right_column:
+    chosen = st.radio(
+        'Sorting hat',
+        ("Gryffindor", "Ravenclaw", "Hufflepuff", "Slytherin"))
+    st.write(f"You are in {chosen} house!")
+
+
+"""
+st.expander sample:
+"""
+st.bar_chart({"data": [1, 5, 2, 6, 2, 1]})
+
+with st.expander("See explanation"):
+    st.write('''
+        The chart above shows some numbers I picked for you.
+        I rolled actual dice for these, so they're *quaranteed* to be random.
+    ''')
+    st.image("https://static.streamlit.io/examples/dice.jpg")
+
+
+
+"""
+# Show progress
+
+When adding long running computations to an app, we can use st.progres() to display status in real time. 
+
+Firsti let's important time. We'are going to use the time.sleep() method to simulate a long running computation:
+"""
+import time 
+
+'Starting a long computation...'
+
+# Add a placeholder 
+latest_iteration = st.empty()
+bar = st.progress(0)
+
+for i in range(100):
+    # Update the progress bar with each iteration. 
+    latest_iteration.text(f'Iteration {i+1}')
+    bar.progress(i + 1)
+    time.sleep(0.1)
+
+'... and now we\'re done! '
